@@ -61,6 +61,8 @@ AvRelExpr <- function(output, input_motif){
   
   sub_output <- droplevels(subset(output, relScore >= 0.9))
   sub_output <- sub_output[order(-sub_output$relScore),]
+  sub_output$input <- as.factor(sub_output$input) # function requires input as factor!!!
+
   
   sub_av_output <- c()	
   for (i in 1:length(levels(sub_output$input))){				
@@ -88,9 +90,10 @@ AvRelExpr <- function(output, input_motif){
   
 
   sub_av_output[] <- lapply(sub_av_output, function(x) if(is.factor(x)) factor(x) else x)	
-  sub_av_output <- cbind(sub_av_output[,c("input", "start"),drop=FALSE], sub_av_output[,c('av.15C.Median', 
-                              'av.CO2.Median', 'av.42C.Median' , 'av.Darkness.Median' , 'av.Fe.Median', 'av.HL.Median', 
-                              'av.N.Median', 'av.P.Median', 'av.ExpP.Median', 'av.StatP.Median'),drop=FALSE])
+  sub_av_output <- cbind(sub_av_output[,c("input", "start"),drop=FALSE], 
+                         sub_av_output[,c('av 15C/Median', 
+                              'av CO2/Median', 'av 42C/Median' , 'av Darkness/Median' , 'av Fe/Median', 'av HL/Median', 
+                              'av N/Median', 'av P/Median', 'av ExpP/Median', 'av StatP/Median'),drop=FALSE])
 
 
   sub_av_output <- sub_av_output[!duplicated(sub_av_output[,1:2]),]
